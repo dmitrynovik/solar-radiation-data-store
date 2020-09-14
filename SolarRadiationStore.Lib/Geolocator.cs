@@ -18,10 +18,13 @@ namespace SolarRadiationStore.Lib
         public LocationForecasts FindNearestLocation(double latitude, double longitude)
         {
             var point = _coordinateFactory.CreatePoint(latitude, longitude);
-            return _dataContext.Locations
+
+            var result = _dataContext.Locations
                 .Include(l => l.Forecasts)
                 .OrderBy(loc => loc.Location.Distance(point))
                 .FirstOrDefault();
+
+            return result;
         }
     }
 }

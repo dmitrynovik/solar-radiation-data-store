@@ -96,12 +96,12 @@ namespace SolarRadiationStore.Lib
         {
             return new SolradNwpForecast
             {
-                Created = this.Created,
-                Modified = this.Modified,
-                Latitude = this.Latitude,
-                Longitude = this.Longitude,
-                Srid = this.Srid,
-                Forecasts = this.Forecasts.Select(f => f.ToSolradForecast()).ToList()
+                Created = Created,
+                Modified = Modified,
+                Latitude = Latitude,
+                Longitude = Longitude,
+                Srid = Srid,
+                Forecasts = Forecasts.Select(f => f.ToSolradForecast()).ToList()
             };
         }
 
@@ -112,9 +112,7 @@ namespace SolarRadiationStore.Lib
         public double Latitude { get; set; }
         public double Longitude { get; set; }
 
-        /// <summary>
-        /// The Spatial Reference System Identifier of the geometry (0 if unspecified).
-        /// </summary>
+        /// <summary>The Spatial Reference System Identifier of the geometry (0 if unspecified).</summary>
         public uint Srid { get; set; }
 
         public DateTime Created { get; set; }
@@ -162,29 +160,27 @@ namespace SolarRadiationStore.Lib
         {
             return new SolradForecast
             {
-                Ghi = this.Ghi,
-                Ghi90 = this.Ghi90,
-                Ghi10 = this.Ghi10,
-                ClearSkyGhi = this.ClearSkyGhi,
-                ClearSkyDni = this.ClearSkyDni,
-                ClearSkyDhi = this.ClearSkyDhi,
-                Ebh = this.Ebh,
-                Ebh10 = this.Ebh10,
-                Ebh90 = this.Ebh90,
-                Dni = this.Dni,
-                Dni10 = this.Dni10,
-                Dni90 = this.Dni90,
-                AirTemp = this.AirTemp,
-                Zenith = this.Zenith,
-                Azimuth = this.Azimuth,
-                CloudOpacity = this.CloudOpacity,
-                SnowClearnessRooftop = this.SnowClearnessRooftop,
-                SnowClearnessUtility = this.SnowClearnessUtility,
-                Period = this.Period,
-                PeriodEnd = this.PeriodEnd,
-
-        };
+                Ghi = Ghi,
+                Ghi90 = Ghi90,
+                Ghi10 = Ghi10,
+                ClearSkyGhi = ClearSkyGhi,
+                ClearSkyDni = ClearSkyDni,
+                ClearSkyDhi = ClearSkyDhi,
+                Ebh = Ebh,
+                Ebh10 = Ebh10,
+                Ebh90 = Ebh90,
+                Dni = Dni,
+                Dni10 = Dni10,
+                Dni90 = Dni90,
+                AirTemp = AirTemp,
+                Zenith = Zenith,
+                Azimuth = Azimuth,
+                CloudOpacity = CloudOpacity,
+                SnowClearnessRooftop = SnowClearnessRooftop,
+                SnowClearnessUtility = SnowClearnessUtility,
+                Period = Period,
+                PeriodEnd = PeriodEnd,
+            };
         }
     }
-
 }
