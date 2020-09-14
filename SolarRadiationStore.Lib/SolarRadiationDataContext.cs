@@ -66,6 +66,8 @@ namespace SolarRadiationStore.Lib
             var coordinateFactory = new CoordinateFactory(forecast.Srid);
             Location = coordinateFactory.CreatePoint(forecast.Latitude, forecast.Longitude);
 
+            Latitude = forecast.Latitude;
+            Longitude = forecast.Longitude;
             Srid = forecast.Srid;
             Created = forecast.Created;
             Modified = forecast.Modified;
@@ -75,6 +77,9 @@ namespace SolarRadiationStore.Lib
         public long Id { get; set; }
 
         public Point Location { get; set; }
+
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
 
         /// <summary>
         /// The Spatial Reference System Identifier of the geometry (0 if unspecified).
