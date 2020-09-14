@@ -14,7 +14,7 @@ namespace SolarRadiationStore.Lib
         private string _user = "admin";
         private string _password = "Password1?";
 
-        public DbSet<LocationForecasts> Forecasts { get; set; }
+        public DbSet<LocationForecasts> Locations { get; set; }
 
         public SolarRadiationDataContext WithHost(string host)
         {
