@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using NetTopologySuite.Geometries;
 using SolradParserTest;
 
@@ -42,7 +43,11 @@ namespace SolarRadiationStore.Lib
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
-            builder.UseNpgsql($"Host={_host};Database={_db};Username={_user};Password={_password}",
+            builder
+                .UseLoggerFactory(new LoggerFactory(new[] {
+                    new Microsoft.Extensions.Logging.Debug.DebugLoggerProvider()
+                }))
+                .UseNpgsql($"Host={_host};Database={_db};Username={_user};Password={_password}",
                 o => o.UseNetTopologySuite());
         }
 

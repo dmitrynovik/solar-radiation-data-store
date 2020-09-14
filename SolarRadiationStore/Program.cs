@@ -21,16 +21,33 @@ namespace SolarRadiationStore
             Console.WriteLine(parsedForecastData);
 
             // Do stuff with data..
-            
-            //using (var dbContext = new SolarRadiationDataContext()
-            //    .WithHost("localhost")
-            //    .WithDatabase("SolarRadiationStore")
-            //    .WithUser("admin")
-            //    .WithPassword("Password1?")
-            //)
-            //{
 
-            //}
+            using var dbContext = new SolarRadiationDataContext()
+                .WithHost("localhost")
+                .WithDatabase("SolarRadiationStore")
+                .WithUser("admin")
+                .WithPassword("Password1?");
+
+            var forecastIngestor = new ForecastIngestor();
+            foreach (var forecast in parsedForecastData)
+            {
+                try
+                {
+                    forecastIngestor.Ingest(forecast, dbContext);
+                }
+                catch (Exception e)
+                {
+                    LogError(e);
+                }
+            }
+        }
+
+        private static void LogError(Exception e)
+        {
+            var consoleColor = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(e);
+            Console.ForegroundColor = consoleColor;
         }
     }
 }
