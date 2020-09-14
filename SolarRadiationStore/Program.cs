@@ -26,48 +26,9 @@ namespace SolarRadiationStore
                 .WithUser("admin")
                 .WithPassword("Password1?");
 
-            const int SAVE_BATCH_SIZE = 100;
-
-            var forecastIngestor = new ForecastIngestor();
-            ulong count = 0;
-
-            // This speeds up bulk inserts:
-            dbContext.ChangeTracker.AutoDetectChangesEnabled = false;
-
-            foreach (var forecast in parsedForecastData)
-            {
-                try
-                {
-                    count = forecastIngestor.Ingest(forecast, dbContext, count);
-                    if (count % SAVE_BATCH_SIZE == 0)
-                    {
-                        SaveBatch(dbContext, count);
-                    }
-                }
-                catch (Exception e)
-                {
-                    LogError(e);
-                }
-            }
-
-            // Save last batch:
-            SaveBatch(dbContext, count);
+             new ForecastIngestor().IngestAll(dbContext, parsedForecastData, LogError);
         }
 
-        private static void SaveBatch(SolarRadiationDataContext dbContext, ulong count)
-        {
-            try
-            {
-                dbContext.ChangeTracker.AutoDetectChangesEnabled = true;
-                dbContext.SaveChanges();
-                Console.WriteLine($"Processed {count} rows");
-            }
-            catch (Exception e)
-            {
-                LogError(e);
-            }
-            dbContext.ChangeTracker.AutoDetectChangesEnabled = false;
-        }
 
         private static void LogError(Exception e)
         {
