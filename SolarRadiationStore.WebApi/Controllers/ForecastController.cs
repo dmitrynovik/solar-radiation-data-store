@@ -20,8 +20,11 @@ namespace SolarRadiationStore.WebApi.Controllers
         [Route("nearest")]
         public SolradNwpForecast GetNearestForecasts(int x, int y)
         {
-            using var dbContext = new SolarRadiationDataContext();
+
+            using var dbContext = new SolarRadiationDataContext().WithEnabledDebugging(); // print generated SQL to Debug output
+
             var locator = new GeoLocator(dbContext);
+
             return locator.FindNearestLocation(x, y)?.ToSolradNwpForecast();
         }
     }

@@ -42,6 +42,7 @@ namespace SolarRadiationStore.Lib
             return this;
         }
 
+        /// <summary>Prints generated SQL to Debug output</summary>
         public SolarRadiationDataContext WithEnabledDebugging()
         {
             _enableDebugLogging = true;
