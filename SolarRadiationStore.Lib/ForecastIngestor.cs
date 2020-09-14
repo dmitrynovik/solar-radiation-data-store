@@ -17,10 +17,10 @@ namespace SolarRadiationStore.Lib
             return count + 1;
         }
 
-        public void IngestAll(SolarRadiationDataContext dbContext, IEnumerable<SolradNwpForecast> parsedForecastData, Action<Exception> onError = null)
+        public void IngestAll(SolarRadiationDataContext dbContext, IEnumerable<SolradNwpForecast> parsedForecastData, 
+            Action<Exception> onError = null,
+            ulong saveBatchSize = 100)
         {
-            const int SAVE_BATCH_SIZE = 100;
-
             ulong count = 0;
 
             // This speeds up bulk inserts:
@@ -31,7 +31,7 @@ namespace SolarRadiationStore.Lib
                 try
                 {
                     count = IngestSingle(forecast, dbContext, count, false);
-                    if (count % SAVE_BATCH_SIZE == 0)
+                    if (count % saveBatchSize == 0)
                     {
                         SaveBatch(dbContext, count, onError);
                     }
