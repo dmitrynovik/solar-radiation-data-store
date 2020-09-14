@@ -149,6 +149,8 @@ namespace SolarRadiationStore.Lib
             CloudOpacity = f.CloudOpacity;
             SnowClearnessRooftop = f.SnowClearnessRooftop;
             SnowClearnessUtility = f.SnowClearnessUtility;
+            Period = f.Period;
+            PeriodEnd = f.PeriodEnd;
         }
 
         public long Id { get; set; }
@@ -178,7 +180,10 @@ namespace SolarRadiationStore.Lib
                 CloudOpacity = this.CloudOpacity,
                 SnowClearnessRooftop = this.SnowClearnessRooftop,
                 SnowClearnessUtility = this.SnowClearnessUtility,
-            };
+                Period = this.Period,
+                PeriodEnd = this.PeriodEnd,
+
+        };
         }
     }
 
