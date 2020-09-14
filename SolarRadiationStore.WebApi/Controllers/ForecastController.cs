@@ -18,14 +18,14 @@ namespace SolarRadiationStore.WebApi.Controllers
 
         [HttpGet]
         [Route("nearest")]
-        public SolradNwpForecast GetNearestForecasts(int x, int y)
+        public SolradNwpForecast GetNearestForecasts(int latitude, int longitude)
         {
 
             using var dbContext = new SolarRadiationDataContext().WithEnabledDebugging(); // print generated SQL to Debug output
 
             var locator = new GeoLocator(dbContext);
 
-            return locator.FindNearestLocation(x, y)?.ToSolradNwpForecast();
+            return locator.FindNearestLocation(latitude, longitude)?.ToSolradNwpForecast();
         }
     }
 }
