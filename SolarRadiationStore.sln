@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolarRadiationStore", "Sola
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolarRadiationStore.Lib", "SolarRadiationStore.Lib\SolarRadiationStore.Lib.csproj", "{5CC780EF-7450-4B12-AB00-E913427BB203}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolarRadiationStore.WebApi", "SolarRadiationStore.WebApi\SolarRadiationStore.WebApi.csproj", "{6662FC88-4F6C-4F1B-A55D-BCC6E32E5DDA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{5CC780EF-7450-4B12-AB00-E913427BB203}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5CC780EF-7450-4B12-AB00-E913427BB203}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5CC780EF-7450-4B12-AB00-E913427BB203}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6662FC88-4F6C-4F1B-A55D-BCC6E32E5DDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6662FC88-4F6C-4F1B-A55D-BCC6E32E5DDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6662FC88-4F6C-4F1B-A55D-BCC6E32E5DDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6662FC88-4F6C-4F1B-A55D-BCC6E32E5DDA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

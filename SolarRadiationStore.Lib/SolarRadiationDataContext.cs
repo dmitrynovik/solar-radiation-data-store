@@ -92,6 +92,19 @@ namespace SolarRadiationStore.Lib
             Forecasts = forecast.Forecasts.Select(f => new DbSolradForecast(this, f)).ToList();
         }
 
+        public SolradNwpForecast ToSolradNwpForecast()
+        {
+            return new SolradNwpForecast
+            {
+                Created = this.Created,
+                Modified = this.Modified,
+                Latitude = this.Latitude,
+                Longitude = this.Longitude,
+                Srid = this.Srid,
+                Forecasts = this.Forecasts.Select(f => f.ToSolradForecast()).ToList()
+            };
+        }
+
         public long Id { get; set; }
 
         public Point Location { get; set; }
@@ -142,6 +155,31 @@ namespace SolarRadiationStore.Lib
 
         public int LocationForecastId { get; set; }
         public LocationForecasts LocationForecasts { get; set; }
+
+        public SolradForecast ToSolradForecast()
+        {
+            return new SolradForecast
+            {
+                Ghi = this.Ghi,
+                Ghi90 = this.Ghi90,
+                Ghi10 = this.Ghi10,
+                ClearSkyGhi = this.ClearSkyGhi,
+                ClearSkyDni = this.ClearSkyDni,
+                ClearSkyDhi = this.ClearSkyDhi,
+                Ebh = this.Ebh,
+                Ebh10 = this.Ebh10,
+                Ebh90 = this.Ebh90,
+                Dni = this.Dni,
+                Dni10 = this.Dni10,
+                Dni90 = this.Dni90,
+                AirTemp = this.AirTemp,
+                Zenith = this.Zenith,
+                Azimuth = this.Azimuth,
+                CloudOpacity = this.CloudOpacity,
+                SnowClearnessRooftop = this.SnowClearnessRooftop,
+                SnowClearnessUtility = this.SnowClearnessUtility,
+            };
+        }
     }
 
 }

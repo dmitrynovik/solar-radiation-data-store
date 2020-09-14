@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace SolarRadiationStore.Lib
 {
@@ -17,7 +18,10 @@ namespace SolarRadiationStore.Lib
         public LocationForecasts FindNearestLocation(double latitude, double longitude)
         {
             var point = _coordinateFactory.CreatePoint(latitude, longitude);
-            return _dataContext.Locations.OrderBy(loc => loc.Location.Distance(point)).FirstOrDefault();
+            return _dataContext.Locations
+                .Include(l => l.Forecasts)
+                .OrderBy(loc => loc.Location.Distance(point))
+                .FirstOrDefault();
         }
     }
 }
