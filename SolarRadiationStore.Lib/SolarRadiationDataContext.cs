@@ -14,7 +14,6 @@ namespace SolarRadiationStore.Lib
         private string _db = "SolarRadiationStore";
         private string _user = "admin";
         private string _password = "Password1?";
-        private string _databaseType = "PostgreSQL";
         private bool _enableDebugLogging;
 
         public DbSet<LocationForecasts> Locations { get; set; }
@@ -43,12 +42,6 @@ namespace SolarRadiationStore.Lib
             return this;
         }
 
-        public SolarRadiationDataContext WithDatabaseType(string rdbmsType)
-        {
-            _databaseType = rdbmsType;
-            return this;
-        }
-
         /// <summary>Prints generated SQL to Debug output</summary>
         public SolarRadiationDataContext WithEnabledDebugging()
         {
@@ -60,15 +53,15 @@ namespace SolarRadiationStore.Lib
         {
             if (_enableDebugLogging)
             {
-                builder.UseLoggerFactory(new LoggerFactory(new[] { new Microsoft.Extensions.Logging.Debug.DebugLoggerProvider() }));
+                builder.UseLoggerFactory(new LoggerFactory(new[]
+                    {
+                        new Microsoft.Extensions.Logging.Debug.DebugLoggerProvider()
+                    }));
             }
 
-            switch (_databaseType)
-            {
-                case "PostgreSQL":
-                    builder.UseNpgsql($"Host={_host};Database={_db};Username={_user};Password={_password}", o => o.UseNetTopologySuite());
-                    break;
-            }
+            builder
+                .UseNpgsql($"Host={_host};Database={_db};Username={_user};Password={_password}",
+                o => o.UseNetTopologySuite());
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
