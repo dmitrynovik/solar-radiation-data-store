@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30104.148
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolarRadiationStore", "SolarRadiationStore\SolarRadiationStore.csproj", "{6E3FCBA4-554E-4A72-94FC-5CFD4A874088}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolarRadiationStore.Lib", "SolarRadiationStore.Lib\SolarRadiationStore.Lib.csproj", "{5CC780EF-7450-4B12-AB00-E913427BB203}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6E3FCBA4-554E-4A72-94FC-5CFD4A874088}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E3FCBA4-554E-4A72-94FC-5CFD4A874088}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E3FCBA4-554E-4A72-94FC-5CFD4A874088}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E3FCBA4-554E-4A72-94FC-5CFD4A874088}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CC780EF-7450-4B12-AB00-E913427BB203}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CC780EF-7450-4B12-AB00-E913427BB203}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CC780EF-7450-4B12-AB00-E913427BB203}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CC780EF-7450-4B12-AB00-E913427BB203}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CD9ED15E-ACBE-4E3C-BF20-5B252540CAC4}
+	EndGlobalSection
+EndGlobal
