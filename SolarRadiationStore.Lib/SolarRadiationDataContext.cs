@@ -17,6 +17,7 @@ namespace SolarRadiationStore.Lib
         private bool _enableDebugLogging;
 
         public DbSet<LocationForecasts> Locations { get; set; }
+        public DbSet<DbSolradForecast> Forecasts { get; set; }
 
         public SolarRadiationDataContext WithHost(string host)
         {
@@ -128,7 +129,7 @@ namespace SolarRadiationStore.Lib
 
         public DbSolradForecast(LocationForecasts l, SolradForecast f)
         {
-            LocationForecasts = l;
+            //LocationForecasts = l;
 
             Ghi = f.Ghi;
             Ghi90 = f.Ghi90;
@@ -154,7 +155,7 @@ namespace SolarRadiationStore.Lib
 
         public long Id { get; set; }
 
-        public int LocationForecastId { get; set; }
+        public long LocationForecastId { get; set; }
         public LocationForecasts LocationForecasts { get; set; }
 
         public SolradForecast ToSolradForecast()

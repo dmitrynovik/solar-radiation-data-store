@@ -24,9 +24,11 @@ namespace SolarRadiationStore
                 .WithHost("localhost")
                 .WithDatabase("SolarRadiationStore")
                 .WithUser("admin")
-                .WithPassword("Password1?");
+                .WithPassword("Password1?")
+                //.WithEnabledDebugging()
+                ;
 
-             new ForecastIngestor().IngestAll(dbContext, parsedForecastData, LogError);
+             new ForecastIngestor().IngestAll(dbContext, parsedForecastData, LogError, 1, true);
         }
 
 

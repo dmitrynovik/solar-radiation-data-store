@@ -13,27 +13,34 @@ namespace SolarRadiationStore.Lib
             if (saveChanges)
             {
                 dbContext.SaveChanges();
+
+                foreach (var f in dbContext.Forecasts)
+                {
+                    f.LocationForecastId = location.Id;
+                }
+                dbContext.SaveChanges();
             }
             return count + 1;
         }
 
         public void IngestAll(SolarRadiationDataContext dbContext, IEnumerable<SolradNwpForecast> parsedForecastData, 
             Action<Exception> onError = null,
-            ulong saveBatchSize = 100)
+            ulong saveBatchSize = 100,
+            bool disableTracking = true)
         {
             ulong count = 0;
 
             // This speeds up bulk inserts:
-            dbContext.ChangeTracker.AutoDetectChangesEnabled = false;
+            if (disableTracking) dbContext.ChangeTracker.AutoDetectChangesEnabled = false;
 
             foreach (var forecast in parsedForecastData)
             {
                 try
                 {
-                    count = IngestSingle(forecast, dbContext, count, false);
+                    count = IngestSingle(forecast, dbContext, count, true);
                     if (count % saveBatchSize == 0)
                     {
-                        SaveBatch(dbContext, count, onError);
+                        SaveBatch(dbContext, count, onError, disableTracking);
                     }
                 }
                 catch (Exception e)
@@ -43,14 +50,14 @@ namespace SolarRadiationStore.Lib
             }
 
             // Save last batch:
-            SaveBatch(dbContext, count, onError);
+            SaveBatch(dbContext, count, onError, disableTracking);
         }
 
-        private static void SaveBatch(SolarRadiationDataContext dbContext, ulong count, Action<Exception> onError)
+        private static void SaveBatch(SolarRadiationDataContext dbContext, ulong count, Action<Exception> onError, bool disableTracking)
         {
             try
             {
-                dbContext.ChangeTracker.AutoDetectChangesEnabled = true;
+                if (disableTracking) dbContext.ChangeTracker.AutoDetectChangesEnabled = true;
                 dbContext.SaveChanges();
                 Console.WriteLine($"Processed {count} rows");
             }
@@ -58,7 +65,7 @@ namespace SolarRadiationStore.Lib
             {
                 onError?.Invoke(e);
             }
-            dbContext.ChangeTracker.AutoDetectChangesEnabled = false;
+            if (disableTracking) dbContext.ChangeTracker.AutoDetectChangesEnabled = false;
         }
 
 
