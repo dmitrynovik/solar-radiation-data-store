@@ -58,7 +58,7 @@ namespace SolarRadiationStore.Lib
             builder.Entity<LocationForecasts>().Property(c => c.Location).HasColumnType("geography (point)");
             builder.Entity<LocationForecasts>().HasIndex(c => c.Location).HasMethod("GIST")/*.IsUnique()*/;
 
-            builder.Entity<DbSolradForecast>().HasKey(f => new { f.LocationForecastId, f.PeriodEnd, f.Period });
+            //builder.Entity<DbSolradForecast>().HasKey(f => new { f.LocationForecastId, f.PeriodEnd, f.Period });
         }
     }
 
@@ -124,6 +124,8 @@ namespace SolarRadiationStore.Lib
             SnowClearnessRooftop = f.SnowClearnessRooftop;
             SnowClearnessUtility = f.SnowClearnessUtility;
         }
+
+        public long Id { get; set; }
 
         public int LocationForecastId { get; set; }
         public LocationForecasts LocationForecasts { get; set; }

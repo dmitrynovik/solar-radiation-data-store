@@ -35,22 +35,23 @@ namespace SolarRadiationStore.Lib
                     location.Srid = ingested.Srid;
                     location.Created = ingested.Created;
                     location.Modified = ingested.Modified;
+                    location.Forecasts = ingested.Forecasts.Select(f => new DbSolradForecast(location, f)).ToList();
 
                     // update forecasts. Here assume that the forecast key is a combination of { PeriodEnd, Period }
-                    var savedForecasts = MakeForecastDictionary(location.Forecasts);
-                    var ingestedForecasts = MakeForecastDictionary(ingested.Forecasts);
-                    foreach (var ingestedForecast in ingestedForecasts)
-                    {
-                        if (!savedForecasts.TryGetValue(ingestedForecast.Key, out var savedForecast))
-                        {
-                            // a new forecast => add:
-                            location.Forecasts.Add(new DbSolradForecast(location, ingestedForecast.Value));
-                        }
-                        else
-                        {
-                            UpdateExistingForecast(savedForecast, ingestedForecast);
-                        }
-                    }
+                    //var savedForecasts = MakeForecastDictionary(location.Forecasts);
+                    //var ingestedForecasts = MakeForecastDictionary(ingested.Forecasts);
+                    //foreach (var ingestedForecast in ingestedForecasts)
+                    //{
+                    //    if (!savedForecasts.TryGetValue(ingestedForecast.Key, out var savedForecast))
+                    //    {
+                    //        // a new forecast => add:
+                    //        location.Forecasts.Add(new DbSolradForecast(location, ingestedForecast.Value));
+                    //    }
+                    //    else
+                    //    {
+                    //        UpdateExistingForecast(savedForecast, ingestedForecast);
+                    //    }
+                    //}
                 }
             }
 
