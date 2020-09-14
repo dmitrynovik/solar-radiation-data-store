@@ -79,7 +79,7 @@ namespace SolarRadiationStore.Lib
     {
         public LocationForecasts() {  }
 
-        public LocationForecasts(SolradNwpForecast forecast) : this()
+        public LocationForecasts(SolradNwpForecast forecast)
         {
             var coordinateFactory = new CoordinateFactory(forecast.Srid);
             Location = coordinateFactory.CreatePoint(forecast.Latitude, forecast.Longitude);
