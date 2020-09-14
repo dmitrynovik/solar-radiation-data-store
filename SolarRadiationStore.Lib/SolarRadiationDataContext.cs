@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using NetTopologySuite;
 using NetTopologySuite.Geometries;
 using SolradParserTest;
 
@@ -53,28 +53,23 @@ namespace SolarRadiationStore.Lib
             builder.Entity<LocationForecasts>().Property(c => c.Location).HasColumnType("geography (point)");
             builder.Entity<LocationForecasts>().HasIndex(c => c.Location).HasMethod("GIST")/*.IsUnique()*/;
 
-            builder.Entity<SolradForecast>().HasKey(f => new { f.PeriodEnd, f.Period });
+            builder.Entity<DbSolradForecast>().HasKey(f => new { f.LocationForecastId, f.PeriodEnd, f.Period });
         }
     }
 
     public class LocationForecasts
     {
-        static readonly GeometryFactory GeometryFactory;
-
-        static LocationForecasts()
-        {
-            GeometryFactory = NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326);
-        }
-
         public LocationForecasts() {  }
 
-        public LocationForecasts(SolradNwpForecast forecast)
+        public LocationForecasts(SolradNwpForecast forecast) : this()
         {
-            Location = GeometryFactory.CreatePoint(new Coordinate(forecast.Latitude, forecast.Longitude));
+            var coordinateFactory = new CoordinateFactory(forecast.Srid);
+            Location = coordinateFactory.CreatePoint(forecast.Latitude, forecast.Longitude);
+
             Srid = forecast.Srid;
             Created = forecast.Created;
             Modified = forecast.Modified;
-            Forecasts = forecast.Forecasts;
+            Forecasts = forecast.Forecasts.Select(f => new DbSolradForecast(this, f)).ToList();
         }
 
         public long Id { get; set; }
@@ -89,7 +84,39 @@ namespace SolarRadiationStore.Lib
         public DateTime Created { get; set; }
         public DateTime Modified { get; set; }
 
-        public List<SolradForecast> Forecasts { get; set; }
+        public List<DbSolradForecast> Forecasts { get; set; }
+    }
+
+    public class DbSolradForecast : SolradForecast
+    {
+        public DbSolradForecast() {  }
+
+        public DbSolradForecast(LocationForecasts l, SolradForecast f)
+        {
+            LocationForecasts = l;
+
+            Ghi = f.Ghi;
+            Ghi90 = f.Ghi90;
+            Ghi10 = f.Ghi10;
+            ClearSkyGhi = f.ClearSkyGhi;
+            ClearSkyDni = f.ClearSkyDni;
+            ClearSkyDhi = f.ClearSkyDhi;
+            Ebh = f.Ebh;
+            Ebh10 = f.Ebh10;
+            Ebh90 = f.Ebh90;
+            Dni = f.Dni;
+            Dni10 = f.Dni10;
+            Dni90 = f.Dni90;
+            AirTemp = f.AirTemp;
+            Zenith = f.Zenith;
+            Azimuth = f.Azimuth;
+            CloudOpacity = f.CloudOpacity;
+            SnowClearnessRooftop = f.SnowClearnessRooftop;
+            SnowClearnessUtility = f.SnowClearnessUtility;
+        }
+
+        public int LocationForecastId { get; set; }
+        public LocationForecasts LocationForecasts { get; set; }
     }
 
 }
