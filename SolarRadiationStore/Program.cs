@@ -29,11 +29,13 @@ namespace SolarRadiationStore
                 .WithPassword("Password1?");
 
             var forecastIngestor = new ForecastIngestor();
+            ulong count = 0;
             foreach (var forecast in parsedForecastData)
             {
                 try
                 {
                     forecastIngestor.Ingest(forecast, dbContext);
+                    Console.WriteLine($"Processed {++count} rows");
                 }
                 catch (Exception e)
                 {

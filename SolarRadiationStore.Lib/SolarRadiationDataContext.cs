@@ -14,6 +14,7 @@ namespace SolarRadiationStore.Lib
         private string _db = "SolarRadiationStore";
         private string _user = "admin";
         private string _password = "Password1?";
+        private bool _enableDebugLogging;
 
         public DbSet<LocationForecasts> Locations { get; set; }
 
@@ -41,12 +42,23 @@ namespace SolarRadiationStore.Lib
             return this;
         }
 
+        public SolarRadiationDataContext WithEnabledDebugging()
+        {
+            _enableDebugLogging = true;
+            return this;
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
+            if (_enableDebugLogging)
+            {
+                builder.UseLoggerFactory(new LoggerFactory(new[]
+                    {
+                        new Microsoft.Extensions.Logging.Debug.DebugLoggerProvider()
+                    }));
+            }
+
             builder
-                .UseLoggerFactory(new LoggerFactory(new[] {
-                    new Microsoft.Extensions.Logging.Debug.DebugLoggerProvider()
-                }))
                 .UseNpgsql($"Host={_host};Database={_db};Username={_user};Password={_password}",
                 o => o.UseNetTopologySuite());
         }
@@ -58,6 +70,7 @@ namespace SolarRadiationStore.Lib
             builder.Entity<LocationForecasts>().Property(c => c.Location).HasColumnType("geography (point)");
             builder.Entity<LocationForecasts>().HasIndex(c => c.Location).HasMethod("GIST")/*.IsUnique()*/;
 
+            builder.Entity<DbSolradForecast>().ToTable("Forecasts");
             //builder.Entity<DbSolradForecast>().HasKey(f => new { f.LocationForecastId, f.PeriodEnd, f.Period });
         }
     }
